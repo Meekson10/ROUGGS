@@ -55,3 +55,209 @@
             0% { opacity: 0; transform: scale(0.98); }
             100% { opacity: 1; transform: scale(1); }
         }
+
+        /* --- HOME VIEW --- */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 70vh;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 15vw;
+            line-height: 0.8;
+            letter-spacing: -5px;
+            margin-bottom: 1rem;
+        }
+
+        .btn-massive {
+            background: var(--fg);
+            color: var(--bg);
+            border: none;
+            padding: 1.5rem 4rem;
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 3rem;
+            transition: all 0.2s;
+        }
+
+        .btn-massive:hover {
+            background: transparent;
+            color: var(--fg);
+            border: 2px solid var(--fg);
+        }
+
+        /* --- COLLECTIONS VIEW --- */
+        .filter-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--accent);
+            padding-bottom: 1rem;
+        }
+
+        .filter-btn {
+            background: transparent;
+            color: var(--accent);
+            border: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .filter-btn.active, .filter-btn:hover { color: var(--fg); }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            border: 2px solid var(--fg);
+            padding: 1rem;
+            transition: all 0.2s;
+        }
+
+        .product-card:hover { background: var(--fg); color: var(--bg); }
+
+        /* Brutalist image placeholder */
+        .product-img {
+            width: 100%;
+            height: 400px;
+            background: repeating-linear-gradient(
+                45deg,
+                var(--bg),
+                var(--bg) 10px,
+                var(--accent) 10px,
+                var(--accent) 20px
+            );
+            border: 2px solid currentcolor;
+            margin-bottom: 1rem;
+        }
+
+        .product-title { font-size: 1.5rem; font-weight: 900; margin-bottom: 0.5rem; }
+        .product-price { font-size: 1rem; font-weight: bold; }
+
+        /* --- BRAND VIEW --- */
+        .brand-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70vh;
+        }
+
+        .brand-text {
+            font-size: 4vw;
+            font-weight: bold;
+            max-width: 1200px;
+            line-height: 1.1;
+            letter-spacing: -1px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo" onclick="switchView('home')">ROUGGS</div>
+        <div class="nav-links">
+            <span onclick="switchView('home')">Home</span>
+            <span onclick="switchView('collections')">Collections</span>
+            <span onclick="switchView('brand')">Brand</span>
+            <span onclick="alert('Bag opened. (Prototype)')">Bag [0]</span>
+        </div>
+    </nav>
+
+    <div id="view-home" class="view active">
+        <div class="hero">
+            <p style="font-size: 1.5rem; font-weight: bold; color: var(--accent);">AW / 26</p>
+            <h1>ROUGGS</h1>
+            <p style="font-size: 1.2rem; max-width: 600px; margin-top: 1rem;">Architectural silhouettes. Uncompromising structure. Navigate the new uniform.</p>
+            <button class="btn-massive" onclick="switchView('collections')">Enter Grid</button>
+        </div>
+    </div>
+
+    <div id="view-collections" class="view">
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterItems('all', this)">All</button>
+            <button class="filter-btn" onclick="filterItems('outerwear', this)">Outerwear</button>
+            <button class="filter-btn" onclick="filterItems('knitwear', this)">Knitwear</button>
+            <button class="filter-btn" onclick="filterItems('tailoring', this)">Tailoring</button>
+        </div>
+
+        <div class="product-grid" id="grid">
+            <div class="product-card item outerwear">
+                <div class="product-img"></div>
+                <div class="product-title">Nylon Shell Coat</div>
+                <div class="product-price">$1,400</div>
+            </div>
+            <div class="product-card item tailoring">
+                <div class="product-img"></div>
+                <div class="product-title">Box-Cut Blazer</div>
+                <div class="product-price">$1,850</div>
+            </div>
+            <div class="product-card item knitwear">
+                <div class="product-img"></div>
+                <div class="product-title">Distressed Mohair</div>
+                <div class="product-price">$890</div>
+            </div>
+            <div class="product-card item outerwear">
+                <div class="product-img"></div>
+                <div class="product-title">Cropped Puffer</div>
+                <div class="product-price">$1,200</div>
+            </div>
+            <div class="product-card item tailoring">
+                <div class="product-img"></div>
+                <div class="product-title">Wide Leg Trouser</div>
+                <div class="product-price">$750</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-brand" class="view">
+        <div class="brand-container">
+            <div class="brand-text">
+                WE DO NOT DESIGN CLOTHING. WE CONSTRUCT SPACES FOR THE BODY TO INHABIT. ROUGGS IS AN ONGOING EXPLORATION OF BRUTALISM, FUNCTION, AND HIGH-CONTRAST LIVING.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Switch between pages
+        function switchView(viewName) {
+            // Hide all
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            // Show targeted
+            document.getElementById('view-' + viewName).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Filter collections logic
+        function filterItems(category, btnElement) {
+            // Update active button styling
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            // Filter the grid items
+            const items = document.querySelectorAll('.item');
+            items.forEach(item => {
+                if (category === 'all') {
+                    item.style.display = 'block';
+                } else {
+                    if (item.classList.contains(category)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
