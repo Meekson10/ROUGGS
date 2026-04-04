@@ -118,3 +118,212 @@
         }
         .hero h1 {
             font-family: var(--font-serif); font-size: 4.5rem; font-style: italic;
+            margin-bottom: 1.5rem; text-shadow: 2px 4px 10px rgba(0,0,0,0.5);
+        }
+        .hero p { text-transform: uppercase; letter-spacing: 4px; font-size: 0.9rem; margin-bottom: 3rem; color: var(--text-light); }
+
+        /* --- PRODUCT GRID --- */
+        .filter-bar {
+            display: flex; justify-content: center; gap: 2rem; margin-bottom: 4rem;
+        }
+        .filter-btn {
+            background: none; border: none; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;
+            padding-bottom: 5px; border-bottom: 1px solid transparent;
+        }
+        .filter-btn:hover, .filter-btn.active { color: var(--text-light); border-color: var(--accent-gold); }
+
+        .grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 3rem;
+        }
+        .product-card { background: var(--bg-secondary); padding: 1rem; cursor: pointer; transition: transform 0.4s; }
+        .product-card:hover { transform: translateY(-10px); }
+        .p-img { width: 100%; height: 400px; object-fit: cover; margin-bottom: 1.5rem; filter: brightness(0.85); transition: 0.4s; }
+        .product-card:hover .p-img { filter: brightness(1); }
+        
+        .p-info { text-align: center; }
+        .p-name { font-family: var(--font-serif); font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--accent-gold); }
+        .p-price { font-size: 0.9rem; color: var(--text-muted); }
+
+        /* --- ABOUT PAGE --- */
+        .about-content { text-align: center; max-width: 800px; margin: 0 auto; }
+        .about-content p { font-size: 1.2rem; line-height: 2; margin-bottom: 2rem; color: var(--text-muted); }
+        .about-content p strong { color: var(--text-light); font-weight: 400; }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-links">
+            <span onclick="switchView('home')" class="nav-item">Home</span>
+            <span onclick="switchView('about')" class="nav-item">About</span>
+            <span onclick="switchView('women')" class="nav-item">Women</span>
+            <span onclick="switchView('men')" class="nav-item">Men</span>
+            <span onclick="switchView('archive')" class="nav-item">Archive</span>
+        </div>
+        <div class="logo" onclick="switchView('home')">ROUGGS</div>
+        <div class="nav-links">
+            <span onclick="addToCart()" class="cart-icon">Bag <div class="cart-count" id="cartCount">0</div></span>
+        </div>
+    </nav>
+
+    <div id="view-home" class="view-section active">
+        <section class="hero">
+            <h1>Elegance, Defined.</h1>
+            <p>The Timeless Collection</p>
+            <button class="btn-primary" onclick="switchView('women')">Discover the House</button>
+        </section>
+        <div class="container" style="text-align: center;">
+            <h2 class="section-title">The Philosophy</h2>
+            <p style="max-width: 700px; margin: 0 auto; font-size: 1.2rem; color: var(--text-muted); line-height: 1.8;">
+                Rouggs is born from an obsession with permanence. We source the finest textiles globally, combining them with meticulous, old-world tailoring. We reject the fleeting in favor of the forever.
+            </p>
+        </div>
+    </div>
+
+    <div id="view-about" class="view-section">
+        <div class="container">
+            <h2 class="section-title">Our Heritage</h2>
+            <div class="about-content">
+                <img src="https://images.unsplash.com/photo-1558718919-68875ea21151?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" style="width: 100%; height: 400px; object-fit: cover; margin-bottom: 3rem; filter: grayscale(50%);">
+                <p><strong>Founded on the principles of exquisite craftsmanship,</strong> Rouggs operates at the intersection of modern luxury and traditional atelier techniques.</p>
+                <p>Every garment is a testament to the hands that made it. We utilize heavy silks, double-faced cashmeres, and full-grain leathers treated with rich, deep dyes that age gracefully alongside the wearer.</p>
+                <p>True luxury whispers; it does not shout. Welcome to Rouggs.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-women" class="view-section">
+        <div class="container">
+            <h2 class="section-title">Women's Collection</h2>
+            <div class="filter-bar">
+                <button class="filter-btn active" onclick="filterGrid('women', 'all', this)">All</button>
+                <button class="filter-btn" onclick="filterGrid('women', 'evening', this)">Evening</button>
+                <button class="filter-btn" onclick="filterGrid('women', 'rtw', this)">Ready-to-Wear</button>
+            </div>
+            <div class="grid">
+                <div class="product-card w-item rtw" onclick="addToCart()">
+                    <img src="https://images.unsplash.com/photo-1534126615549-5d4a08f515e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="p-img">
+                    <div class="p-info">
+                        <div class="p-name">Velvet Smoking Jacket</div>
+                        <div class="p-price">$2,450 USD</div>
+                    </div>
+                </div>
+                <div class="product-card w-item evening" onclick="addToCart()">
+                    <img src="https://images.unsplash.com/photo-1566160980482-fa8430b2012a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="p-img">
+                    <div class="p-info">
+                        <div class="p-name">Draped Silk Gown</div>
+                        <div class="p-price">$4,100 USD</div>
+                    </div>
+                </div>
+                <div class="product-card w-item rtw" onclick="addToCart()">
+                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="p-img">
+                    <div class="p-info">
+                        <div class="p-name">Cashmere Wrap Coat</div>
+                        <div class="p-price">$3,800 USD</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-men" class="view-section">
+        <div class="container">
+            <h2 class="section-title">Men's Collection</h2>
+            <div class="filter-bar">
+                <button class="filter-btn active" onclick="filterGrid('men', 'all', this)">All</button>
+                <button class="filter-btn" onclick="filterGrid('men', 'tailoring', this)">Tailoring</button>
+                <button class="filter-btn" onclick="filterGrid('men', 'outerwear', this)">Outerwear</button>
+            </div>
+            <div class="grid">
+                <div class="product-card m-item tailoring" onclick="addToCart()">
+                    <img src="https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="p-img">
+                    <div class="p-info">
+                        <div class="p-name">Wool Jacquard Suit</div>
+                        <div class="p-price">$3,100 USD</div>
+                    </div>
+                </div>
+                <div class="product-card m-item outerwear" onclick="addToCart()">
+                    <img src="https://images.unsplash.com/photo-1520975954732-57dd22299614?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="p-img">
+                    <div class="p-info">
+                        <div class="p-name">Shearling Aviator</div>
+                        <div class="p-price">$4,500 USD</div>
+                    </div>
+                </div>
+                <div class="product-card m-item tailoring" onclick="addToCart()">
+                    <img src="https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="p-img">
+                    <div class="p-info">
+                        <div class="p-name">Merino Turtleneck</div>
+                        <div class="p-price">$850 USD</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-archive" class="view-section">
+        <div class="container">
+            <h2 class="section-title">The Archive</h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 4rem;">Past collections and rare, one-of-a-kind pieces.</p>
+            <div class="grid">
+                <div class="product-card" onclick="addToCart()">
+                    <img src="https://images.unsplash.com/photo-1584916201218-f4242ceb4809?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="p-img">
+                    <div class="p-info">
+                        <div class="p-name">Vintage Leather Tote</div>
+                        <div class="p-price">Price Upon Request</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Navigation / Page Switching
+        function switchView(viewId) {
+            // Hide all pages
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            // Reset active nav styles
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active-link'));
+            
+            // Show targeted page
+            document.getElementById('view-' + viewId).classList.add('active');
+            
+            // Highlight current nav item (using a simple loop match)
+            event.currentTarget.classList.add('active-link');
+            
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 2. Category Filtering (Men/Women)
+        function filterGrid(gender, category, btnElement) {
+            // Update button styles
+            const buttons = btnElement.parentElement.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            // Filter logic
+            const items = document.querySelectorAll(`.${gender[0]}-item`); // 'w-item' or 'm-item'
+            items.forEach(item => {
+                if (category === 'all') {
+                    item.style.display = 'block';
+                } else if (item.classList.contains(category)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // 3. Cart Logic (Simulates adding to bag)
+        let cartCount = 0;
+        function addToCart() {
+            cartCount++;
+            document.getElementById('cartCount').innerText = cartCount;
+            // Simple alert to simulate action, since we don't have a backend
+            alert("Added to your shopping bag.");
+        }
+    </script>
+</body>
+</html>
