@@ -3,261 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROUGGS | Brutalist Edition</title>
+    <title>ROUGGS | Timeless Elegance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        /* --- BRUTALIST DARK MODE DESIGN SYSTEM --- */
+        /* --- LUXURY COLOR PALETTE & TYPOGRAPHY --- */
         :root {
-            --bg: #050505;
-            --fg: #F4F4F0;
-            --accent: #555555;
+            --bg-primary: #1A1614; /* Deep Espresso / Soft Black */
+            --bg-secondary: #24201E; /* Slightly lighter espresso */
+            --text-light: #F4F0EC; /* Warm Alabaster */
+            --text-muted: #A39B96; /* Taupe */
+            --accent-gold: #B89B72; /* Muted Antique Gold */
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Lato', sans-serif;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg);
-            color: var(--fg);
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            text-transform: uppercase;
+            background-color: var(--bg-primary);
+            color: var(--text-light);
+            font-family: var(--font-sans);
+            font-weight: 300;
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
-        button, a { cursor: pointer; font-family: inherit; }
+        a, button { cursor: pointer; color: inherit; text-decoration: none; transition: 0.3s ease; }
+        ul { list-style: none; }
 
         /* --- NAVIGATION --- */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 2rem;
-            border-bottom: 2px solid var(--fg);
-            position: sticky;
+            padding: 2rem 4rem;
+            position: fixed;
+            width: 100%;
             top: 0;
-            background-color: var(--bg);
             z-index: 1000;
+            background: rgba(26, 22, 20, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(184, 155, 114, 0.1);
         }
 
         .logo {
-            font-size: 2.5rem;
-            font-weight: 900;
-            letter-spacing: -2px;
+            font-family: var(--font-serif);
+            font-size: 2.2rem;
+            letter-spacing: 0.25em;
+            color: var(--accent-gold);
+            text-transform: uppercase;
         }
 
-        .nav-links { display: flex; gap: 2rem; align-items: center; font-weight: bold; font-size: 0.9rem; }
-        .nav-links span { transition: color 0.2s; }
-        .nav-links span:hover { color: var(--accent); }
+        .nav-links { display: flex; gap: 2.5rem; }
+        .nav-links span {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: var(--text-light);
+        }
+        .nav-links span:hover, .nav-links span.active-link { color: var(--accent-gold); }
+
+        .cart-icon { position: relative; }
+        .cart-count {
+            position: absolute; top: -10px; right: -15px;
+            background: var(--accent-gold); color: var(--bg-primary);
+            font-size: 0.65rem; width: 18px; height: 18px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-weight: bold;
+        }
 
         /* --- VIEW MANAGER --- */
-        .view { display: none; padding: 2rem; min-height: 85vh; animation: flashIn 0.3s ease-out; }
-        .view.active { display: block; }
+        .view-section {
+            display: none;
+            padding-top: 100px; /* Space for fixed header */
+            min-height: 100vh;
+            animation: fadeIn 0.8s ease forwards;
+        }
+        .view-section.active { display: block; }
 
-        @keyframes flashIn {
-            0% { opacity: 0; transform: scale(0.98); }
-            100% { opacity: 1; transform: scale(1); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- HOME VIEW --- */
-        .hero {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 70vh;
+        /* --- UI COMPONENTS --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+        
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 3rem;
             text-align: center;
+            margin-bottom: 3rem;
+            color: var(--accent-gold);
         }
 
-        .hero h1 {
-            font-size: 15vw;
-            line-height: 0.8;
-            letter-spacing: -5px;
-            margin-bottom: 1rem;
-        }
-
-        .btn-massive {
-            background: var(--fg);
-            color: var(--bg);
-            border: none;
-            padding: 1.5rem 4rem;
-            font-size: 1.5rem;
-            font-weight: 900;
+        .btn-primary {
+            display: inline-block;
+            padding: 1rem 3rem;
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-top: 3rem;
-            transition: all 0.2s;
-        }
-
-        .btn-massive:hover {
+            font-size: 0.8rem;
             background: transparent;
-            color: var(--fg);
-            border: 2px solid var(--fg);
         }
+        .btn-primary:hover { background: var(--accent-gold); color: var(--bg-primary); }
 
-        /* --- COLLECTIONS VIEW --- */
-        .filter-bar {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-            border-bottom: 1px solid var(--accent);
-            padding-bottom: 1rem;
+        /* --- HOME PAGE --- */
+        .hero {
+            height: 100vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(26,22,20,0.4), rgba(26,22,20,0.8)), url('https://images.unsplash.com/photo-1571216300139-38c5b3644917?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') center/cover;
+            margin-top: -100px; /* Overlap header */
         }
-
-        .filter-btn {
-            background: transparent;
-            color: var(--accent);
-            border: none;
-            font-size: 1.2rem;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .filter-btn.active, .filter-btn:hover { color: var(--fg); }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .product-card {
-            border: 2px solid var(--fg);
-            padding: 1rem;
-            transition: all 0.2s;
-        }
-
-        .product-card:hover { background: var(--fg); color: var(--bg); }
-
-        /* Brutalist image placeholder */
-        .product-img {
-            width: 100%;
-            height: 400px;
-            background: repeating-linear-gradient(
-                45deg,
-                var(--bg),
-                var(--bg) 10px,
-                var(--accent) 10px,
-                var(--accent) 20px
-            );
-            border: 2px solid currentcolor;
-            margin-bottom: 1rem;
-        }
-
-        .product-title { font-size: 1.5rem; font-weight: 900; margin-bottom: 0.5rem; }
-        .product-price { font-size: 1rem; font-weight: bold; }
-
-        /* --- BRAND VIEW --- */
-        .brand-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 70vh;
-        }
-
-        .brand-text {
-            font-size: 4vw;
-            font-weight: bold;
-            max-width: 1200px;
-            line-height: 1.1;
-            letter-spacing: -1px;
-        }
-    </style>
-</head>
-<body>
-
-    <nav>
-        <div class="logo" onclick="switchView('home')">ROUGGS</div>
-        <div class="nav-links">
-            <span onclick="switchView('home')">Home</span>
-            <span onclick="switchView('collections')">Collections</span>
-            <span onclick="switchView('brand')">Brand</span>
-            <span onclick="alert('Bag opened. (Prototype)')">Bag [0]</span>
-        </div>
-    </nav>
-
-    <div id="view-home" class="view active">
-        <div class="hero">
-            <p style="font-size: 1.5rem; font-weight: bold; color: var(--accent);">AW / 26</p>
-            <h1>ROUGGS</h1>
-            <p style="font-size: 1.2rem; max-width: 600px; margin-top: 1rem;">Architectural silhouettes. Uncompromising structure. Navigate the new uniform.</p>
-            <button class="btn-massive" onclick="switchView('collections')">Enter Grid</button>
-        </div>
-    </div>
-
-    <div id="view-collections" class="view">
-        <div class="filter-bar">
-            <button class="filter-btn active" onclick="filterItems('all', this)">All</button>
-            <button class="filter-btn" onclick="filterItems('outerwear', this)">Outerwear</button>
-            <button class="filter-btn" onclick="filterItems('knitwear', this)">Knitwear</button>
-            <button class="filter-btn" onclick="filterItems('tailoring', this)">Tailoring</button>
-        </div>
-
-        <div class="product-grid" id="grid">
-            <div class="product-card item outerwear">
-                <div class="product-img"></div>
-                <div class="product-title">Nylon Shell Coat</div>
-                <div class="product-price">$1,400</div>
-            </div>
-            <div class="product-card item tailoring">
-                <div class="product-img"></div>
-                <div class="product-title">Box-Cut Blazer</div>
-                <div class="product-price">$1,850</div>
-            </div>
-            <div class="product-card item knitwear">
-                <div class="product-img"></div>
-                <div class="product-title">Distressed Mohair</div>
-                <div class="product-price">$890</div>
-            </div>
-            <div class="product-card item outerwear">
-                <div class="product-img"></div>
-                <div class="product-title">Cropped Puffer</div>
-                <div class="product-price">$1,200</div>
-            </div>
-            <div class="product-card item tailoring">
-                <div class="product-img"></div>
-                <div class="product-title">Wide Leg Trouser</div>
-                <div class="product-price">$750</div>
-            </div>
-        </div>
-    </div>
-
-    <div id="view-brand" class="view">
-        <div class="brand-container">
-            <div class="brand-text">
-                WE DO NOT DESIGN CLOTHING. WE CONSTRUCT SPACES FOR THE BODY TO INHABIT. ROUGGS IS AN ONGOING EXPLORATION OF BRUTALISM, FUNCTION, AND HIGH-CONTRAST LIVING.
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Switch between pages
-        function switchView(viewName) {
-            // Hide all
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            // Show targeted
-            document.getElementById('view-' + viewName).classList.add('active');
-            window.scrollTo(0, 0);
-        }
-
-        // Filter collections logic
-        function filterItems(category, btnElement) {
-            // Update active button styling
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            btnElement.classList.add('active');
-
-            // Filter the grid items
-            const items = document.querySelectorAll('.item');
-            items.forEach(item => {
-                if (category === 'all') {
-                    item.style.display = 'block';
-                } else {
-                    if (item.classList.contains(category)) {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                }
-            });
-        }
-    </script>
-</body>
-</html>
+        .hero h1 {
+            font-family: var(--font-serif); font-size: 4.5rem; font-style: italic;
