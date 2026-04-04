@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROUGGS | Interactive Prototype</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS VARIABLES (The Design System) --- */
+        :root {
+            --bg: #fdfcfb;
+            --text: #111;
+            --gold: #bfa065;
+            --grey: #f4f4f4;
+            --overlay: rgba(0,0,0,0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Lato', sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            overflow-x: hidden; 
+        }
+
+        /* --- UI COMPONENTS --- */
+        button { cursor: pointer; border: none; outline: none; transition: 0.3s; }
+        
+        .btn-main {
+            padding: 15px 40px;
+            background: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 12px;
+        }
+        .btn-main:hover { background: #fff; color: #000; }
+
+        .btn-black {
+            background: #000; color: #fff; padding: 15px 30px; width: 100%;
+            text-transform: uppercase; letter-spacing: 2px; font-size: 11px; margin-top: 20px;
+        }
+        .btn-black:hover { background: var(--gold); }
+
+        /* --- HEADER --- */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 50px; position: fixed; width: 100%; top: 0; z-index: 100;
+            background: rgba(253, 252, 251, 0.95); border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .logo { font-family: 'Cinzel', serif; font-size: 24px; letter-spacing: 5px; cursor: pointer; }
+        .nav-links span { margin: 0 15px; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; cursor: pointer; }
+        .cart-icon { position: relative; cursor: pointer; }
+        .cart-count { 
+            position: absolute; top: -8px; right: -10px; 
+            background: var(--gold); color: #fff; font-size: 10px; 
+            width: 16px; height: 16px; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* --- HERO --- */
+        .hero {
+            height: 100vh; background: url('https://images.unsplash.com/photo-1469334031218-e382a71b716b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') center/cover;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: #fff;
+        }
+        .hero h1 { font-family: 'Cinzel', serif; font-size: 60px; letter-spacing: 10px; margin-bottom: 20px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .hero p { text-transform: uppercase; letter-spacing: 4px; font-size: 12px; margin-bottom: 40px; }
+
+        /* --- TABS --- */
+        .tabs { display: flex; justify-content: center; margin: 60px 0 40px; gap: 20px; }
+        .tab { padding-bottom: 5px; border-bottom: 2px solid transparent; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; }
+        .tab.active { border-color: #000; }
+
+        /* --- GRID --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px 100px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px; display: none; }
+        .grid.active { display: grid; } /* JS toggles this */
+
+        .card { cursor: pointer; }
+        .card-img { height: 450px; overflow: hidden; position: relative; background: #eee; }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card:hover img { transform: scale(1.05); }
+        .card-info { padding-top: 15px; text-align: center; }
+        .card-title { font-family: 'Cinzel', serif; margin-bottom: 5px; }
+        .card-price { color: #666; font-size: 14px; }
+
+        /* --- MODAL (POPUP) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 200; display: none;
+            justify-content: center; align-items: center;
+        }
+        .modal {
+            background: #fff; width: 900px; height: 500px; display: flex;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2); animation: fadeInUp 0.4s ease;
+        }
+        .modal-img { width: 50%; height: 100%; }
+        .modal-img img { width: 100%; height: 100%; object-fit: cover; }
+        .modal-info { width: 50%; padding: 60px; position: relative; display: flex; flex-direction: column; justify-content: center; }
+        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 24px; cursor: pointer; }
+        
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- NOTIFICATION --- */
+        .notification {
+            position: fixed; bottom: 30px; right: 30px; background: #111; color: #fff;
+            padding: 15px 25px; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;
+            transform: translateY(100px); transition: 0.4s; z-index: 300;
+        }
+        .notification.show { transform: translateY(0); }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-links">
+            <span onclick="scrollToShop()">Shop</span>
+            <span>About</span>
+        </div>
+        <div class="logo">ROUGGS</div>
+        <div class="nav-links">
+            <span>Search</span>
+            <span class="cart-icon">Bag <div class="cart-count" id="cartCount">0</div></span>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <p>Autumn / Winter Collection</p>
+        <h1>Silence & Form</h1>
+        <button class="btn-main" onclick="scrollToShop()">Explore</button>
+    </section>
+
+    <div class="container" id="shop">
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('women', this)">Women</div>
+            <div class="tab" onclick="switchTab('men', this)">Men</div>
+        </div>
+
+        <div class="grid active" id="women-grid">
+            <div class="card" onclick="openModal('The Cashmere Trench', '$3,200', 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')">
+                <div class="card-img"><img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"></div>
+                <div class="card-info">
+                    <h3 class="card-title">Cashmere Trench</h3>
+                    <p class="card-price">$3,200</p>
+                </div>
+            </div>
+            <div class="card" onclick="openModal('Silk Structured Blazer', '$1,850', 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')">
+                <div class="card-img"><img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"></div>
+                <div class="card-info">
+                    <h3 class="card-title">Silk Blazer</h3>
+                    <p class="card-price">$1,850</p>
+                </div>
+            </div>
+            <div class="card" onclick="openModal('Pleated Wool Trouser', '$950', 'https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')">
+                <div class="card-img"><img src="https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"></div>
+                <div class="card-info">
+                    <h3 class="card-title">Wool Trouser</h3>
+                    <p class="card-price">$950</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid" id="men-grid">
+            <div class="card" onclick="openModal('Merino Roll Neck', '$720', 'https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')">
+                <div class="card-img"><img src="https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"></div>
+                <div class="card-info">
+                    <h3 class="card-title">Merino Roll Neck</h3>
+                    <p class="card-price">$720</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-img">
+                <img id="m-img" src="" alt="">
+            </div>
+            <div class="modal-info">
+                <div class="close-btn" onclick="closeModal()">×</div>
+                <p style="text-transform: uppercase; color: #888; font-size: 10px; letter-spacing: 2px;">New Arrival</p>
+                <h2 id="m-title" style="font-family: 'Cinzel', serif; font-size: 32px; margin: 10px 0;">Product Title</h2>
+                <p id="m-price" style="font-size: 18px; color: #555; margin-bottom: 20px;">$0.00</p>
+                <p style="font-size: 13px; line-height: 1.6; color: #666; margin-bottom: 30px;">
+                    Crafted in our Italian atelier from sustainably sourced materials. This garment features architectural tailoring designed for permanence.
+                </p>
+                <button class="btn-black" onclick="addToCart()">Add to Bag</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notif">Item added to your bag</div>
+
+    <script>
+        // 1. SCROLL
+        function scrollToShop() {
+            document.getElementById('shop').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 2. TAB SWITCHING (Women / Men)
+        function switchTab(category, btn) {
+            // Remove active class from buttons
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            // Add active class to clicked button
+            btn.classList.add('active');
+
+            // Hide all grids
+            document.querySelectorAll('.grid').forEach(g => g.classList.remove('active'));
+            // Show selected grid
+            document.getElementById(category + '-grid').classList.add('active');
+        }
+
+        // 3. OPEN MODAL
+        function openModal(title, price, imgUrl) {
+            document.getElementById('m-title').innerText = title;
+            document.getElementById('m-price').innerText = price;
+            document.getElementById('m-img').src = imgUrl;
+            document.getElementById('modalOverlay').style.display = 'flex';
+        }
+
+        // 4. CLOSE MODAL
+        function closeModal() {
+            document.getElementById('modalOverlay').style.display = 'none';
+        }
+
+        // Close modal if clicking outside
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // 5. ADD TO CART LOGIC
+        let cart = 0;
+        function addToCart() {
+            cart++;
+            document.getElementById('cartCount').innerText = cart;
+            closeModal();
+            
+            // Show Notification
+            const notif = document.getElementById('notif');
+            notif.classList.add('show');
+            setTimeout(() => {
+                notif.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
