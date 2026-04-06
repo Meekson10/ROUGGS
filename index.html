@@ -3,327 +3,373 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROUGGS | Timeless Elegance</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>ROUGGS | Timeless Luxury</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Proza+Libre:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    
     <style>
-        /* --- LUXURY COLOR PALETTE & TYPOGRAPHY --- */
+        /* --- RICH LUXURY COLOR PALETTE --- */
         :root {
-            --bg-primary: #1A1614; /* Deep Espresso / Soft Black */
-            --bg-secondary: #24201E; /* Slightly lighter espresso */
-            --text-light: #F4F0EC; /* Warm Alabaster */
-            --text-muted: #A39B96; /* Taupe */
-            --accent-gold: #B89B72; /* Muted Antique Gold */
-            --font-serif: 'Playfair Display', serif;
-            --font-sans: 'Lato', sans-serif;
+            --bg-ivory: #FDFBF7; /* Soft, rich background */
+            --bg-dark: #111111; /* True black for contrast */
+            --accent-burgundy: #4A0E17; /* Deep rich wine */
+            --accent-gold: #D4AF37; /* Champagne Gold */
+            --text-main: #2A2A2A; /* Soft black for readability */
+            --font-serif: 'Cinzel', serif;
+            --font-sans: 'Proza Libre', sans-serif;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg-primary);
-            color: var(--text-light);
+            background-color: var(--bg-ivory);
+            color: var(--text-main);
             font-family: var(--font-sans);
-            font-weight: 300;
-            line-height: 1.6;
+            line-height: 1.7;
             overflow-x: hidden;
         }
 
-        a, button { cursor: pointer; color: inherit; text-decoration: none; transition: 0.3s ease; }
+        a, button { cursor: pointer; text-decoration: none; color: inherit; transition: all 0.4s ease; }
         ul { list-style: none; }
 
-        /* --- NAVIGATION --- */
+        /* --- LUXURY NAVIGATION --- */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 2rem 4rem;
+            padding: 1.5rem 4rem;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            background: rgba(26, 22, 20, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(184, 155, 114, 0.1);
+            background: transparent;
+            transition: background 0.5s ease, padding 0.5s ease;
+        }
+        
+        nav.scrolled {
+            background: rgba(253, 251, 247, 0.98);
+            padding: 1rem 4rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
 
+        nav.scrolled .logo, nav.scrolled .nav-links span { color: var(--bg-dark); }
+        
         .logo {
             font-family: var(--font-serif);
             font-size: 2.2rem;
-            letter-spacing: 0.25em;
-            color: var(--accent-gold);
+            letter-spacing: 0.15em;
+            color: #fff;
             text-transform: uppercase;
+            font-weight: 700;
+            transition: color 0.5s ease;
         }
 
-        .nav-links { display: flex; gap: 2.5rem; }
+        .nav-links { display: flex; gap: 3rem; align-items: center; }
         .nav-links span {
-            text-transform: uppercase;
             font-size: 0.75rem;
+            text-transform: uppercase;
             letter-spacing: 2px;
-            color: var(--text-light);
+            color: #fff;
+            position: relative;
         }
-        .nav-links span:hover, .nav-links span.active-link { color: var(--accent-gold); }
-
-        .cart-icon { position: relative; }
-        .cart-count {
-            position: absolute; top: -10px; right: -15px;
-            background: var(--accent-gold); color: var(--bg-primary);
-            font-size: 0.65rem; width: 18px; height: 18px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-weight: bold;
+        
+        .nav-links span::after {
+            content: ''; position: absolute; width: 0; height: 1px;
+            bottom: -5px; left: 0; background-color: var(--accent-gold);
+            transition: width 0.3s ease;
         }
+        .nav-links span:hover::after, .nav-links span.active::after { width: 100%; }
 
         /* --- VIEW MANAGER --- */
-        .view-section {
-            display: none;
-            padding-top: 100px; /* Space for fixed header */
-            min-height: 100vh;
-            animation: fadeIn 0.8s ease forwards;
-        }
+        .view-section { display: none; min-height: 100vh; animation: fadeView 0.8s ease; }
         .view-section.active { display: block; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeView { from { opacity: 0; } to { opacity: 1; } }
 
-        /* --- UI COMPONENTS --- */
-        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+        /* --- HERO SLIDESHOW (HOME) --- */
+        .slideshow-container { position: relative; height: 100vh; width: 100%; overflow: hidden; background: #000; }
+        .slide {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            opacity: 0; transition: opacity 1.5s ease-in-out;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: #fff;
+        }
+        .slide::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 1; }
+        .slide.active { opacity: 1; z-index: 2; }
         
-        .section-title {
-            font-family: var(--font-serif);
-            font-size: 3rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            color: var(--accent-gold);
-        }
+        .slide-content { position: relative; z-index: 3; }
+        .slide h2 { font-family: var(--font-serif); font-size: 4rem; margin-bottom: 1rem; letter-spacing: 4px; text-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+        .slide p { text-transform: uppercase; letter-spacing: 4px; font-size: 0.85rem; margin-bottom: 2rem; }
 
-        .btn-primary {
-            display: inline-block;
-            padding: 1rem 3rem;
-            border: 1px solid var(--accent-gold);
-            color: var(--accent-gold);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.8rem;
-            background: transparent;
+        .btn-gold {
+            display: inline-block; padding: 1rem 3rem; border: 1px solid var(--accent-gold);
+            color: var(--accent-gold); text-transform: uppercase; letter-spacing: 2px; font-size: 0.75rem;
+            background: transparent; backdrop-filter: blur(5px);
         }
-        .btn-primary:hover { background: var(--accent-gold); color: var(--bg-primary); }
+        .btn-gold:hover { background: var(--accent-gold); color: #fff; }
 
-        /* --- HOME PAGE --- */
-        .hero {
-            height: 100vh;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center;
-            background: linear-gradient(rgba(26,22,20,0.4), rgba(26,22,20,0.8)), url('https://images.unsplash.com/photo-1571216300139-38c5b3644917?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') center/cover;
-            margin-top: -100px; /* Overlap header */
-        }
-        .hero h1 {
-            font-family: var(--font-serif); font-size: 4.5rem; font-style: italic;
-            margin-bottom: 1.5rem; text-shadow: 2px 4px 10px rgba(0,0,0,0.5);
-        }
-        .hero p { text-transform: uppercase; letter-spacing: 4px; font-size: 0.9rem; margin-bottom: 3rem; color: var(--text-light); }
+        /* --- SECTION FORMATTING --- */
+        .container { max-width: 1300px; margin: 0 auto; padding: 6rem 2rem; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header h2 { font-family: var(--font-serif); font-size: 2.8rem; color: var(--bg-dark); margin-bottom: 1rem; }
+        .section-header p { color: var(--accent-burgundy); text-transform: uppercase; letter-spacing: 3px; font-size: 0.8rem; }
 
-        /* --- PRODUCT GRID --- */
-        .filter-bar {
-            display: flex; justify-content: center; gap: 2rem; margin-bottom: 4rem;
-        }
-        .filter-btn {
-            background: none; border: none; color: var(--text-muted);
-            text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;
-            padding-bottom: 5px; border-bottom: 1px solid transparent;
-        }
-        .filter-btn:hover, .filter-btn.active { color: var(--text-light); border-color: var(--accent-gold); }
+        /* --- TOP PIECES GRID --- */
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .product-card { background: #fff; border: 1px solid #eee; transition: all 0.5s ease; cursor: pointer; padding-bottom: 1.5rem; }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.08); }
+        .p-img-wrapper { height: 450px; overflow: hidden; margin-bottom: 1.5rem; }
+        .p-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+        .product-card:hover .p-img-wrapper img { transform: scale(1.05); }
+        .p-details { text-align: center; padding: 0 1rem; }
+        .p-title { font-family: var(--font-serif); font-size: 1.2rem; color: var(--bg-dark); margin-bottom: 0.5rem; }
+        .p-price { color: var(--accent-gold); font-weight: 500; font-size: 0.9rem; }
 
-        .grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 3rem;
+        /* --- ATELIER PAGE --- */
+        .atelier-hero {
+            height: 60vh; background: url('https://images.unsplash.com/photo-1617137968427-85924c800a22?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') center/cover;
+            display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 4rem;
         }
-        .product-card { background: var(--bg-secondary); padding: 1rem; cursor: pointer; transition: transform 0.4s; }
-        .product-card:hover { transform: translateY(-10px); }
-        .p-img { width: 100%; height: 400px; object-fit: cover; margin-bottom: 1.5rem; filter: brightness(0.85); transition: 0.4s; }
-        .product-card:hover .p-img { filter: brightness(1); }
+        .atelier-hero::after { content: ''; position: absolute; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
+        .atelier-hero h1 { position: relative; z-index: 2; color: #fff; font-family: var(--font-serif); font-size: 4rem; letter-spacing: 5px; }
         
-        .p-info { text-align: center; }
-        .p-name { font-family: var(--font-serif); font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--accent-gold); }
-        .p-price { font-size: 0.9rem; color: var(--text-muted); }
+        .split-section { display: flex; align-items: center; gap: 4rem; margin-bottom: 6rem; }
+        .split-text { flex: 1; }
+        .split-text h3 { font-family: var(--font-serif); font-size: 2.2rem; color: var(--accent-burgundy); margin-bottom: 1.5rem; }
+        .split-img { flex: 1; height: 500px; }
+        .split-img img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* --- ABOUT PAGE --- */
-        .about-content { text-align: center; max-width: 800px; margin: 0 auto; }
-        .about-content p { font-size: 1.2rem; line-height: 2; margin-bottom: 2rem; color: var(--text-muted); }
-        .about-content p strong { color: var(--text-light); font-weight: 400; }
+        /* --- COLLECTIONS PAGE --- */
+        .collection-tabs { display: flex; justify-content: center; gap: 3rem; margin-bottom: 4rem; border-bottom: 1px solid #ddd; padding-bottom: 1rem; }
+        .tab-btn { background: none; border: none; font-family: var(--font-serif); font-size: 1.2rem; color: #888; padding-bottom: 0.5rem; position: relative; }
+        .tab-btn.active, .tab-btn:hover { color: var(--accent-burgundy); }
+        .tab-btn.active::after { content: ''; position: absolute; width: 100%; height: 2px; background: var(--accent-burgundy); bottom: -17px; left: 0; }
+        
+        .collection-grid { display: none; animation: fadeView 0.5s ease; }
+        .collection-grid.active { display: grid; }
 
+        /* --- FOOTER --- */
+        footer { background: var(--bg-dark); color: #fff; padding: 5rem 4rem 2rem; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
+        .footer-logo { font-family: var(--font-serif); font-size: 2rem; color: var(--accent-gold); margin-bottom: 1rem; letter-spacing: 3px; }
+        .f-col h4 { font-family: var(--font-serif); color: var(--accent-gold); margin-bottom: 1.5rem; font-size: 1.1rem; }
+        .f-col li { margin-bottom: 0.8rem; font-size: 0.85rem; color: #aaa; }
+        .f-col li:hover { color: #fff; }
     </style>
 </head>
 <body>
 
-    <nav>
+    <nav id="navbar">
         <div class="nav-links">
-            <span onclick="switchView('home')" class="nav-item">Home</span>
-            <span onclick="switchView('about')" class="nav-item">About</span>
-            <span onclick="switchView('women')" class="nav-item">Women</span>
-            <span onclick="switchView('men')" class="nav-item">Men</span>
-            <span onclick="switchView('archive')" class="nav-item">Archive</span>
+            <span onclick="switchView('home')" class="nav-item active">Home</span>
+            <span onclick="switchView('atelier')" class="nav-item">The Atelier</span>
+            <span onclick="switchView('collections')" class="nav-item">Collections</span>
         </div>
         <div class="logo" onclick="switchView('home')">ROUGGS</div>
         <div class="nav-links">
-            <span onclick="addToCart()" class="cart-icon">Bag <div class="cart-count" id="cartCount">0</div></span>
+            <span onclick="alert('Client Concierge opened.')">Concierge</span>
+            <span onclick="alert('Shopping Bag opened.')">Bag [0]</span>
         </div>
     </nav>
 
     <div id="view-home" class="view-section active">
-        <section class="hero">
-            <h1>Elegance, Defined.</h1>
-            <p>The Timeless Collection</p>
-            <button class="btn-primary" onclick="switchView('women')">Discover the House</button>
-        </section>
-        <div class="container" style="text-align: center;">
-            <h2 class="section-title">The Philosophy</h2>
-            <p style="max-width: 700px; margin: 0 auto; font-size: 1.2rem; color: var(--text-muted); line-height: 1.8;">
-                Rouggs is born from an obsession with permanence. We source the finest textiles globally, combining them with meticulous, old-world tailoring. We reject the fleeting in favor of the forever.
-            </p>
-        </div>
-    </div>
-
-    <div id="view-about" class="view-section">
-        <div class="container">
-            <h2 class="section-title">Our Heritage</h2>
-            <div class="about-content">
-                <img src="https://images.unsplash.com/photo-1558718919-68875ea21151?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" style="width: 100%; height: 400px; object-fit: cover; margin-bottom: 3rem; filter: grayscale(50%);">
-                <p><strong>Founded on the principles of exquisite craftsmanship,</strong> Rouggs operates at the intersection of modern luxury and traditional atelier techniques.</p>
-                <p>Every garment is a testament to the hands that made it. We utilize heavy silks, double-faced cashmeres, and full-grain leathers treated with rich, deep dyes that age gracefully alongside the wearer.</p>
-                <p>True luxury whispers; it does not shout. Welcome to Rouggs.</p>
+        <div class="slideshow-container">
+            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop');">
+                <div class="slide-content">
+                    <p>Current Season</p>
+                    <h2>Spring / Summer 2026</h2>
+                    <button class="btn-gold" onclick="switchView('collections')">View Collection</button>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=2070&auto=format&fit=crop');">
+                <div class="slide-content">
+                    <p>Upcoming Season Preview</p>
+                    <h2>Autumn / Winter 2026</h2>
+                    <button class="btn-gold" onclick="switchView('collections')">Discover AW26</button>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1571216300139-38c5b3644917?q=80&w=2000&auto=format&fit=crop');">
+                <div class="slide-content">
+                    <p>The Heritage</p>
+                    <h2>Timeless Elegance</h2>
+                    <button class="btn-gold" onclick="switchView('atelier')">Explore Atelier</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div id="view-women" class="view-section">
         <div class="container">
-            <h2 class="section-title">Women's Collection</h2>
-            <div class="filter-bar">
-                <button class="filter-btn active" onclick="filterGrid('women', 'all', this)">All</button>
-                <button class="filter-btn" onclick="filterGrid('women', 'evening', this)">Evening</button>
-                <button class="filter-btn" onclick="filterGrid('women', 'rtw', this)">Ready-to-Wear</button>
+            <div class="section-header">
+                <p>Curated Selection</p>
+                <h2>Signature Pieces</h2>
             </div>
-            <div class="grid">
-                <div class="product-card w-item rtw" onclick="addToCart()">
-                    <img src="https://images.unsplash.com/photo-1534126615549-5d4a08f515e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="p-img">
-                    <div class="p-info">
-                        <div class="p-name">Velvet Smoking Jacket</div>
-                        <div class="p-price">$2,450 USD</div>
+            <div class="grid-3">
+                <div class="product-card" onclick="alert('Item details opened.')">
+                    <div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=1000&auto=format&fit=crop" alt="Trench"></div>
+                    <div class="p-details">
+                        <div class="p-title">The Heritage Trench</div>
+                        <div class="p-price">$3,850</div>
                     </div>
                 </div>
-                <div class="product-card w-item evening" onclick="addToCart()">
-                    <img src="https://images.unsplash.com/photo-1566160980482-fa8430b2012a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="p-img">
-                    <div class="p-info">
-                        <div class="p-name">Draped Silk Gown</div>
-                        <div class="p-price">$4,100 USD</div>
+                <div class="product-card" onclick="alert('Item details opened.')">
+                    <div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?q=80&w=1000&auto=format&fit=crop" alt="Suit"></div>
+                    <div class="p-details">
+                        <div class="p-title">Bespoke Wool Suit</div>
+                        <div class="p-price">$4,200</div>
                     </div>
                 </div>
-                <div class="product-card w-item rtw" onclick="addToCart()">
-                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="p-img">
-                    <div class="p-info">
-                        <div class="p-name">Cashmere Wrap Coat</div>
-                        <div class="p-price">$3,800 USD</div>
+                <div class="product-card" onclick="alert('Item details opened.')">
+                    <div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1584916201218-f4242ceb4809?q=80&w=1000&auto=format&fit=crop" alt="Bag"></div>
+                    <div class="p-details">
+                        <div class="p-title">Saddle Leather Tote</div>
+                        <div class="p-price">$2,900</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="view-men" class="view-section">
+    <div id="view-atelier" class="view-section">
+        <div class="atelier-hero">
+            <h1>The Atelier</h1>
+        </div>
         <div class="container">
-            <h2 class="section-title">Men's Collection</h2>
-            <div class="filter-bar">
-                <button class="filter-btn active" onclick="filterGrid('men', 'all', this)">All</button>
-                <button class="filter-btn" onclick="filterGrid('men', 'tailoring', this)">Tailoring</button>
-                <button class="filter-btn" onclick="filterGrid('men', 'outerwear', this)">Outerwear</button>
+            <div class="split-section">
+                <div class="split-text">
+                    <h3>A Legacy of Craftsmanship</h3>
+                    <p style="margin-bottom: 1.5rem;">At ROUGGS, we do not simply manufacture garments; we engineer heirlooms. Founded on the uncompromising principles of master tailoring, our atelier represents the pinnacle of sartorial elegance.</p>
+                    <p>Every piece is conceived with an obsessive attention to detail, utilizing only the rarest, most sustainable materials sourced from historic European mills. Our artisans spend upwards of 80 hours hand-stitching a single jacket to ensure a silhouette that defies the passage of time.</p>
+                </div>
+                <div class="split-img">
+                    <img src="https://images.unsplash.com/photo-1558718919-68875ea21151?q=80&w=1000&auto=format&fit=crop" alt="Tailoring Details">
+                </div>
             </div>
-            <div class="grid">
-                <div class="product-card m-item tailoring" onclick="addToCart()">
-                    <img src="https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="p-img">
-                    <div class="p-info">
-                        <div class="p-name">Wool Jacquard Suit</div>
-                        <div class="p-price">$3,100 USD</div>
-                    </div>
+            <div class="split-section" style="flex-direction: row-reverse;">
+                <div class="split-text">
+                    <h3>Bespoke Services</h3>
+                    <p>For our most discerning clientele, the ROUGGS Bespoke experience offers unparalleled exclusivity. We invite you into our private fitting rooms where garments are molded perfectly to your unique architecture.</p>
+                    <br>
+                    <button class="btn-gold" style="color: var(--accent-burgundy); border-color: var(--accent-burgundy);" onclick="alert('Booking portal opened.')">Request an Appointment</button>
                 </div>
-                <div class="product-card m-item outerwear" onclick="addToCart()">
-                    <img src="https://images.unsplash.com/photo-1520975954732-57dd22299614?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="p-img">
-                    <div class="p-info">
-                        <div class="p-name">Shearling Aviator</div>
-                        <div class="p-price">$4,500 USD</div>
-                    </div>
-                </div>
-                <div class="product-card m-item tailoring" onclick="addToCart()">
-                    <img src="https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="p-img">
-                    <div class="p-info">
-                        <div class="p-name">Merino Turtleneck</div>
-                        <div class="p-price">$850 USD</div>
-                    </div>
+                <div class="split-img">
+                    <img src="https://images.unsplash.com/photo-1520975954732-57dd22299614?q=80&w=1000&auto=format&fit=crop" alt="Bespoke Coat">
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="view-archive" class="view-section">
-        <div class="container">
-            <h2 class="section-title">The Archive</h2>
-            <p style="text-align: center; color: var(--text-muted); margin-bottom: 4rem;">Past collections and rare, one-of-a-kind pieces.</p>
-            <div class="grid">
-                <div class="product-card" onclick="addToCart()">
-                    <img src="https://images.unsplash.com/photo-1584916201218-f4242ceb4809?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="p-img">
-                    <div class="p-info">
-                        <div class="p-name">Vintage Leather Tote</div>
-                        <div class="p-price">Price Upon Request</div>
-                    </div>
-                </div>
+    <div id="view-collections" class="view-section" style="padding-top: 150px;">
+        <div class="container" style="padding-top: 0;">
+            <div class="section-header">
+                <h2>The Collections</h2>
+            </div>
+            
+            <div class="collection-tabs">
+                <button class="tab-btn active" onclick="switchCollection('ss26', this)">Spring / Summer 2026</button>
+                <button class="tab-btn" onclick="switchCollection('aw26', this)">Autumn / Winter 2026</button>
+                <button class="tab-btn" onclick="switchCollection('core', this)">Core Classics</button>
+            </div>
+
+            <div id="col-ss26" class="grid-3 collection-grid active">
+                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1566160980482-fa8430b2012a?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Silk Chiffon Gown</div><div class="p-price">$4,500</div></div></div>
+                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1534126615549-5d4a08f515e3?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Linen Summer Blazer</div><div class="p-price">$2,200</div></div></div>
+                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Pleated Day Dress</div><div class="p-price">$1,850</div></div></div>
+            </div>
+
+            <div id="col-aw26" class="grid-3 collection-grid">
+                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Heavy Cashmere Coat</div><div class="p-price">$5,200</div></div></div>
+                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Alpaca Roll-Neck</div><div class="p-price">$1,400</div></div></div>
+                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Double-Faced Trench</div><div class="p-price">$3,900</div></div></div>
+            </div>
+
+            <div id="col-core" class="grid-3 collection-grid">
+                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">The Foundation Suit</div><div class="p-price">$4,000</div></div></div>
+                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1584916201218-f4242ceb4809?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Signature Weekender</div><div class="p-price">$3,500</div></div></div>
+                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Wool Crepe Trouser</div><div class="p-price">$1,100</div></div></div>
             </div>
         </div>
     </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="f-col">
+                <div class="footer-logo">ROUGGS</div>
+                <p style="color: #aaa; font-size: 0.85rem;">Defining modern luxury through the lens of uncompromising heritage.</p>
+            </div>
+            <div class="f-col">
+                <h4>Client Services</h4>
+                <ul>
+                    <li><a href="#">Private Appointments</a></li>
+                    <li><a href="#">Bespoke Tailoring</a></li>
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="#">Contact Concierge</a></li>
+                </ul>
+            </div>
+            <div class="f-col">
+                <h4>The House</h4>
+                <ul>
+                    <li><a href="#" onclick="switchView('atelier')">Our Heritage</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="f-col">
+                <h4>Newsletter</h4>
+                <p style="color: #aaa; font-size: 0.85rem; margin-bottom: 1rem;">Receive invitations to exclusive presentations.</p>
+                <input type="email" placeholder="Email Address" style="width: 100%; padding: 0.8rem; background: transparent; border: 1px solid #444; color: #fff; margin-bottom: 1rem;">
+                <button class="btn-gold" style="width: 100%; padding: 0.8rem;">Subscribe</button>
+            </div>
+        </div>
+        <div style="border-top: 1px solid #333; padding-top: 2rem; text-align: center; color: #666; font-size: 0.8rem;">
+            &copy; 2026 ROUGGS. WORLDWIDE.
+        </div>
+    </footer>
 
     <script>
-        // 1. Navigation / Page Switching
+        // 1. Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // 2. Page Navigation
         function switchView(viewId) {
-            // Hide all pages
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-            // Reset active nav styles
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active-link'));
-            
-            // Show targeted page
             document.getElementById('view-' + viewId).classList.add('active');
             
-            // Highlight current nav item (using a simple loop match)
-            event.currentTarget.classList.add('active-link');
+            // Handle nav links highlight
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
             
-            // Scroll to top smoothly
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 2. Category Filtering (Men/Women)
-        function filterGrid(gender, category, btnElement) {
-            // Update button styles
-            const buttons = btnElement.parentElement.querySelectorAll('.filter-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
+        // 3. Collection Tabs
+        function switchCollection(colId, btnElement) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             btnElement.classList.add('active');
-
-            // Filter logic
-            const items = document.querySelectorAll(`.${gender[0]}-item`); // 'w-item' or 'm-item'
-            items.forEach(item => {
-                if (category === 'all') {
-                    item.style.display = 'block';
-                } else if (item.classList.contains(category)) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
+            
+            document.querySelectorAll('.collection-grid').forEach(grid => grid.classList.remove('active'));
+            document.getElementById('col-' + colId).classList.add('active');
         }
 
-        // 3. Cart Logic (Simulates adding to bag)
-        let cartCount = 0;
-        function addToCart() {
-            cartCount++;
-            document.getElementById('cartCount').innerText = cartCount;
-            // Simple alert to simulate action, since we don't have a backend
-            alert("Added to your shopping bag.");
+        // 4. Hero Slideshow Logic
+        let slideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        function showSlides() {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1 }
+            slides[slideIndex - 1].classList.add('active');
+            setTimeout(showSlides, 5000); // Change image every 5 seconds
         }
+        
+        // Start slideshow
+        showSlides();
     </script>
 </body>
 </html>
