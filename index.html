@@ -3,158 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROUGGS | Timeless Luxury</title>
+    <title>ROUGGS | Organic Luxury</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Proza+Libre:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     
     <style>
-        /* --- RICH LUXURY COLOR PALETTE --- */
+        /* --- ORGANIC & SUSTAINABLE COLOR PALETTE --- */
         :root {
-            --bg-ivory: #FDFBF7; /* Soft, rich background */
-            --bg-dark: #111111; /* True black for contrast */
-            --accent-burgundy: #4A0E17; /* Deep rich wine */
-            --accent-gold: #D4AF37; /* Champagne Gold */
-            --text-main: #2A2A2A; /* Soft black for readability */
-            --font-serif: 'Cinzel', serif;
-            --font-sans: 'Proza Libre', sans-serif;
+            --bg-linen: #F7F5F0; /* Soft, warm raw linen */
+            --bg-sand: #EDE4D9; /* Slightly darker earthy tone */
+            --text-forest: #2A3B2C; /* Deep, muted green for main text */
+            --text-earth: #6B6358; /* Soft brownish-grey for secondary text */
+            --accent-clay: #B87D65; /* Terracotta / Clay accent */
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Montserrat', sans-serif;
+            --radius-soft: 16px; /* Soft rounded corners */
+            --radius-pill: 50px; /* Pill-shaped buttons */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg-ivory);
-            color: var(--text-main);
+            background-color: var(--bg-linen);
+            color: var(--text-forest);
             font-family: var(--font-sans);
-            line-height: 1.7;
+            font-weight: 300;
+            line-height: 1.8;
             overflow-x: hidden;
         }
 
         a, button { cursor: pointer; text-decoration: none; color: inherit; transition: all 0.4s ease; }
         ul { list-style: none; }
+        img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* --- LUXURY NAVIGATION --- */
+        /* --- ORGANIC NAVIGATION --- */
         nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 4rem;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            background: transparent;
-            transition: background 0.5s ease, padding 0.5s ease;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.5rem 4rem; position: fixed; width: 100%; top: 0; z-index: 1000;
+            background: transparent; transition: background 0.5s ease, padding 0.5s ease;
         }
         
         nav.scrolled {
-            background: rgba(253, 251, 247, 0.98);
+            background: rgba(247, 245, 240, 0.95); /* Frosted linen */
+            backdrop-filter: blur(10px);
             padding: 1rem 4rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 30px rgba(42, 59, 44, 0.05);
         }
 
-        nav.scrolled .logo, nav.scrolled .nav-links span { color: var(--bg-dark); }
+        nav.scrolled .logo, nav.scrolled .nav-links span { color: var(--text-forest); }
         
         .logo {
-            font-family: var(--font-serif);
-            font-size: 2.2rem;
-            letter-spacing: 0.15em;
-            color: #fff;
-            text-transform: uppercase;
-            font-weight: 700;
+            font-family: var(--font-serif); font-size: 2.2rem; letter-spacing: 0.1em;
+            color: var(--bg-linen); font-weight: 600; text-transform: uppercase;
             transition: color 0.5s ease;
         }
 
         .nav-links { display: flex; gap: 3rem; align-items: center; }
         .nav-links span {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #fff;
-            position: relative;
+            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--bg-linen); font-weight: 500;
         }
         
-        .nav-links span::after {
-            content: ''; position: absolute; width: 0; height: 1px;
-            bottom: -5px; left: 0; background-color: var(--accent-gold);
-            transition: width 0.3s ease;
+        .nav-links span:hover, .nav-links span.active { color: var(--accent-clay); }
+
+        .cart-wrapper { position: relative; }
+        .cart-count {
+            position: absolute; top: -8px; right: -12px;
+            background: var(--accent-clay); color: #fff; font-size: 0.65rem;
+            width: 18px; height: 18px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-weight: 600;
         }
-        .nav-links span:hover::after, .nav-links span.active::after { width: 100%; }
 
         /* --- VIEW MANAGER --- */
-        .view-section { display: none; min-height: 100vh; animation: fadeView 0.8s ease; }
+        .view-section { display: none; min-height: 100vh; animation: fadeInSoft 1s ease; padding-top: 100px; }
         .view-section.active { display: block; }
+        #view-home { padding-top: 0; }
 
-        @keyframes fadeView { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInSoft { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- HERO SLIDESHOW (HOME) --- */
-        .slideshow-container { position: relative; height: 100vh; width: 100%; overflow: hidden; background: #000; }
+        /* --- UI COMPONENTS --- */
+        .container { max-width: 1300px; margin: 0 auto; padding: 4rem 2rem; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header h2 { font-family: var(--font-serif); font-size: 3rem; color: var(--text-forest); font-weight: 400; font-style: italic; margin-bottom: 0.5rem; }
+        .section-header p { color: var(--accent-clay); text-transform: uppercase; letter-spacing: 3px; font-size: 0.75rem; font-weight: 500; }
+
+        /* Buttons */
+        .btn-outline {
+            display: inline-block; padding: 1rem 2.5rem; border: 1px solid var(--bg-linen);
+            color: var(--bg-linen); text-transform: uppercase; letter-spacing: 2px; font-size: 0.75rem;
+            border-radius: var(--radius-pill); background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);
+        }
+        .btn-outline:hover { background: var(--bg-linen); color: var(--text-forest); }
+
+        .btn-solid {
+            display: inline-block; padding: 1rem 3rem; background: var(--text-forest);
+            color: var(--bg-linen); text-transform: uppercase; letter-spacing: 2px; font-size: 0.75rem;
+            border-radius: var(--radius-pill); border: none;
+        }
+        .btn-solid:hover { background: var(--accent-clay); }
+
+        /* ================= 1. HOME PAGE (SLIDESHOW) ================= */
+        .slideshow-container { position: relative; height: 100vh; width: 100%; overflow: hidden; background: var(--text-forest); }
         .slide {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover; background-position: center;
-            opacity: 0; transition: opacity 1.5s ease-in-out;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: #fff;
+            opacity: 0; transition: opacity 2s ease-in-out;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: var(--bg-linen);
         }
-        .slide::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 1; }
+        .slide::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(42, 59, 44, 0.3); z-index: 1; }
         .slide.active { opacity: 1; z-index: 2; }
         
-        .slide-content { position: relative; z-index: 3; }
-        .slide h2 { font-family: var(--font-serif); font-size: 4rem; margin-bottom: 1rem; letter-spacing: 4px; text-shadow: 0 4px 15px rgba(0,0,0,0.4); }
-        .slide p { text-transform: uppercase; letter-spacing: 4px; font-size: 0.85rem; margin-bottom: 2rem; }
+        .slide-content { position: relative; z-index: 3; max-width: 800px; padding: 2rem; }
+        .slide h2 { font-family: var(--font-serif); font-size: 4.5rem; margin-bottom: 1rem; font-weight: 300; font-style: italic; }
+        .slide p { text-transform: uppercase; letter-spacing: 4px; font-size: 0.8rem; margin-bottom: 2.5rem; }
 
-        .btn-gold {
-            display: inline-block; padding: 1rem 3rem; border: 1px solid var(--accent-gold);
-            color: var(--accent-gold); text-transform: uppercase; letter-spacing: 2px; font-size: 0.75rem;
-            background: transparent; backdrop-filter: blur(5px);
+        /* Featured Grid */
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; }
+        .product-card { background: transparent; cursor: pointer; transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .product-card:hover { transform: translateY(-10px); }
+        .p-img-wrapper { 
+            height: 480px; overflow: hidden; margin-bottom: 1.5rem; 
+            border-radius: var(--radius-soft); 
         }
-        .btn-gold:hover { background: var(--accent-gold); color: #fff; }
-
-        /* --- SECTION FORMATTING --- */
-        .container { max-width: 1300px; margin: 0 auto; padding: 6rem 2rem; }
-        .section-header { text-align: center; margin-bottom: 4rem; }
-        .section-header h2 { font-family: var(--font-serif); font-size: 2.8rem; color: var(--bg-dark); margin-bottom: 1rem; }
-        .section-header p { color: var(--accent-burgundy); text-transform: uppercase; letter-spacing: 3px; font-size: 0.8rem; }
-
-        /* --- TOP PIECES GRID --- */
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-        .product-card { background: #fff; border: 1px solid #eee; transition: all 0.5s ease; cursor: pointer; padding-bottom: 1.5rem; }
-        .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.08); }
-        .p-img-wrapper { height: 450px; overflow: hidden; margin-bottom: 1.5rem; }
-        .p-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+        .p-img-wrapper img { transition: transform 1.2s ease; }
         .product-card:hover .p-img-wrapper img { transform: scale(1.05); }
-        .p-details { text-align: center; padding: 0 1rem; }
-        .p-title { font-family: var(--font-serif); font-size: 1.2rem; color: var(--bg-dark); margin-bottom: 0.5rem; }
-        .p-price { color: var(--accent-gold); font-weight: 500; font-size: 0.9rem; }
+        .p-details { text-align: center; }
+        .p-title { font-family: var(--font-serif); font-size: 1.4rem; color: var(--text-forest); margin-bottom: 0.2rem; }
+        .p-price { color: var(--text-earth); font-size: 0.9rem; }
 
-        /* --- ATELIER PAGE --- */
+        /* ================= 2. THE ATELIER ================= */
         .atelier-hero {
-            height: 60vh; background: url('https://images.unsplash.com/photo-1617137968427-85924c800a22?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') center/cover;
-            display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 4rem;
+            height: 60vh; background: url('https://images.unsplash.com/photo-1600607688969-a5bfcd646154?q=80&w=2000&auto=format&fit=crop') center/cover;
+            display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 2rem;
+            border-radius: 0 0 40px 40px; overflow: hidden;
         }
-        .atelier-hero::after { content: ''; position: absolute; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
-        .atelier-hero h1 { position: relative; z-index: 2; color: #fff; font-family: var(--font-serif); font-size: 4rem; letter-spacing: 5px; }
+        .atelier-hero::after { content: ''; position: absolute; width: 100%; height: 100%; background: rgba(42, 59, 44, 0.4); }
+        .atelier-hero h1 { position: relative; z-index: 2; color: var(--bg-linen); font-family: var(--font-serif); font-size: 4rem; font-weight: 300; font-style: italic; }
         
-        .split-section { display: flex; align-items: center; gap: 4rem; margin-bottom: 6rem; }
+        .split-section { display: flex; align-items: center; gap: 5rem; margin-bottom: 6rem; }
         .split-text { flex: 1; }
-        .split-text h3 { font-family: var(--font-serif); font-size: 2.2rem; color: var(--accent-burgundy); margin-bottom: 1.5rem; }
-        .split-img { flex: 1; height: 500px; }
-        .split-img img { width: 100%; height: 100%; object-fit: cover; }
+        .split-text h3 { font-family: var(--font-serif); font-size: 2.5rem; color: var(--text-forest); margin-bottom: 1.5rem; font-weight: 400; }
+        .split-img { flex: 1; height: 550px; border-radius: var(--radius-soft); overflow: hidden; }
 
-        /* --- COLLECTIONS PAGE --- */
-        .collection-tabs { display: flex; justify-content: center; gap: 3rem; margin-bottom: 4rem; border-bottom: 1px solid #ddd; padding-bottom: 1rem; }
-        .tab-btn { background: none; border: none; font-family: var(--font-serif); font-size: 1.2rem; color: #888; padding-bottom: 0.5rem; position: relative; }
-        .tab-btn.active, .tab-btn:hover { color: var(--accent-burgundy); }
-        .tab-btn.active::after { content: ''; position: absolute; width: 100%; height: 2px; background: var(--accent-burgundy); bottom: -17px; left: 0; }
+        /* ================= 3. COLLECTIONS ================= */
+        .collection-tabs { display: flex; justify-content: center; gap: 3rem; margin-bottom: 4rem; }
+        .tab-btn { 
+            background: none; border: none; font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--text-earth); padding: 0.8rem 2rem; border-radius: var(--radius-pill); transition: 0.3s;
+        }
+        .tab-btn.active, .tab-btn:hover { background: var(--bg-sand); color: var(--text-forest); }
         
-        .collection-grid { display: none; animation: fadeView 0.5s ease; }
+        .collection-grid { display: none; animation: fadeInSoft 0.8s ease; }
         .collection-grid.active { display: grid; }
 
-        /* --- FOOTER --- */
-        footer { background: var(--bg-dark); color: #fff; padding: 5rem 4rem 2rem; }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
-        .footer-logo { font-family: var(--font-serif); font-size: 2rem; color: var(--accent-gold); margin-bottom: 1rem; letter-spacing: 3px; }
-        .f-col h4 { font-family: var(--font-serif); color: var(--accent-gold); margin-bottom: 1.5rem; font-size: 1.1rem; }
-        .f-col li { margin-bottom: 0.8rem; font-size: 0.85rem; color: #aaa; }
-        .f-col li:hover { color: #fff; }
+        /* ================= 4. STYLE GUIDES ================= */
+        .look-block { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; margin-bottom: 8rem; align-items: center; }
+        
+        .look-image { height: 85vh; border-radius: var(--radius-soft); overflow: hidden; }
+        
+        .look-details { padding: 3rem; background: var(--bg-sand); border-radius: var(--radius-soft); }
+        .look-meta { margin-bottom: 3rem; }
+        .look-title { font-family: var(--font-serif); font-size: 2.5rem; color: var(--text-forest); margin-bottom: 1rem; font-style: italic; line-height: 1.1; }
+        .look-desc { color: var(--text-earth); font-size: 0.95rem; line-height: 1.8; }
+
+        .product-list-item { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(42, 59, 44, 0.1); }
+        .product-list-item:last-child { border-bottom: none; }
+        .pi-thumb { width: 90px; height: 110px; border-radius: 8px; overflow: hidden; }
+        .pi-text h4 { font-family: var(--font-sans); font-weight: 500; font-size: 0.9rem; color: var(--text-forest); margin-bottom: 0.2rem; }
+        .pi-text p { color: var(--text-earth); font-size: 0.85rem; }
+
+        .shop-look-cta { margin-top: 3rem; text-align: center; }
+        .total-price { font-family: var(--font-serif); font-size: 2.2rem; color: var(--text-forest); margin-bottom: 1.5rem; }
+
+        /* ================= FOOTER ================= */
+        footer { background: var(--bg-sand); color: var(--text-earth); padding: 5rem 4rem 2rem; margin-top: 4rem; border-top-left-radius: 40px; border-top-right-radius: 40px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
+        .footer-logo { font-family: var(--font-serif); font-size: 2.5rem; color: var(--text-forest); margin-bottom: 1rem; font-weight: 600; }
+        .f-col h4 { font-family: var(--font-sans); color: var(--text-forest); margin-bottom: 1.5rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; }
+        .f-col li { margin-bottom: 0.8rem; font-size: 0.9rem; transition: color 0.3s; }
+        .f-col li:hover { color: var(--accent-clay); cursor: pointer; }
     </style>
 </head>
 <body>
@@ -162,66 +189,60 @@
     <nav id="navbar">
         <div class="nav-links">
             <span onclick="switchView('home')" class="nav-item active">Home</span>
-            <span onclick="switchView('atelier')" class="nav-item">The Atelier</span>
+            <span onclick="switchView('atelier')" class="nav-item">Atelier</span>
             <span onclick="switchView('collections')" class="nav-item">Collections</span>
+            <span onclick="switchView('styleguides')" class="nav-item">Style Guides</span>
         </div>
         <div class="logo" onclick="switchView('home')">ROUGGS</div>
         <div class="nav-links">
-            <span onclick="alert('Client Concierge opened.')">Concierge</span>
-            <span onclick="alert('Shopping Bag opened.')">Bag [0]</span>
+            <span>Search</span>
+            <span class="cart-wrapper" onclick="alert('Bag opened.')">Bag <div class="cart-count" id="cartCount">0</div></span>
         </div>
     </nav>
 
     <div id="view-home" class="view-section active">
         <div class="slideshow-container">
-            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop');">
+            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=2000&auto=format&fit=crop');">
                 <div class="slide-content">
-                    <p>Current Season</p>
-                    <h2>Spring / Summer 2026</h2>
-                    <button class="btn-gold" onclick="switchView('collections')">View Collection</button>
+                    <p>Spring / Summer 2026</p>
+                    <h2>Organic Silhouettes</h2>
+                    <button class="btn-outline" onclick="switchView('collections')">View Collection</button>
                 </div>
             </div>
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=2070&auto=format&fit=crop');">
-                <div class="slide-content">
-                    <p>Upcoming Season Preview</p>
-                    <h2>Autumn / Winter 2026</h2>
-                    <button class="btn-gold" onclick="switchView('collections')">Discover AW26</button>
-                </div>
-            </div>
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1571216300139-38c5b3644917?q=80&w=2000&auto=format&fit=crop');">
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1434389670869-c87563171804?q=80&w=2000&auto=format&fit=crop');">
                 <div class="slide-content">
                     <p>The Heritage</p>
-                    <h2>Timeless Elegance</h2>
-                    <button class="btn-gold" onclick="switchView('atelier')">Explore Atelier</button>
+                    <h2>Earth & Form</h2>
+                    <button class="btn-outline" onclick="switchView('atelier')">Discover the Atelier</button>
                 </div>
             </div>
         </div>
 
         <div class="container">
             <div class="section-header">
-                <p>Curated Selection</p>
+                <p>Curated Essentials</p>
                 <h2>Signature Pieces</h2>
             </div>
             <div class="grid-3">
-                <div class="product-card" onclick="alert('Item details opened.')">
-                    <div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=1000&auto=format&fit=crop" alt="Trench"></div>
+                <div class="product-card" onclick="switchView('styleguides')">
+                    <div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=1000&auto=format&fit=crop"></div>
                     <div class="p-details">
-                        <div class="p-title">The Heritage Trench</div>
+                        <div class="p-title">Raw Cashmere Trench</div>
                         <div class="p-price">$3,850</div>
                     </div>
                 </div>
-                <div class="product-card" onclick="alert('Item details opened.')">
-                    <div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?q=80&w=1000&auto=format&fit=crop" alt="Suit"></div>
+                <div class="product-card" onclick="switchView('styleguides')">
+                    <div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1550614000-4b9519e02a29?q=80&w=1000&auto=format&fit=crop"></div>
                     <div class="p-details">
-                        <div class="p-title">Bespoke Wool Suit</div>
-                        <div class="p-price">$4,200</div>
+                        <div class="p-title">Vegetable Tanned Weekender</div>
+                        <div class="p-price">$1,900</div>
                     </div>
                 </div>
-                <div class="product-card" onclick="alert('Item details opened.')">
-                    <div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1584916201218-f4242ceb4809?q=80&w=1000&auto=format&fit=crop" alt="Bag"></div>
+                <div class="product-card" onclick="switchView('styleguides')">
+                    <div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?q=80&w=1000&auto=format&fit=crop"></div>
                     <div class="p-details">
-                        <div class="p-title">Saddle Leather Tote</div>
-                        <div class="p-price">$2,900</div>
+                        <div class="p-title">Undyed Wool Knit</div>
+                        <div class="p-price">$850</div>
                     </div>
                 </div>
             </div>
@@ -230,124 +251,172 @@
 
     <div id="view-atelier" class="view-section">
         <div class="atelier-hero">
-            <h1>The Atelier</h1>
+            <h1>Rooted in Nature</h1>
         </div>
         <div class="container">
             <div class="split-section">
                 <div class="split-text">
-                    <h3>A Legacy of Craftsmanship</h3>
-                    <p style="margin-bottom: 1.5rem;">At ROUGGS, we do not simply manufacture garments; we engineer heirlooms. Founded on the uncompromising principles of master tailoring, our atelier represents the pinnacle of sartorial elegance.</p>
-                    <p>Every piece is conceived with an obsessive attention to detail, utilizing only the rarest, most sustainable materials sourced from historic European mills. Our artisans spend upwards of 80 hours hand-stitching a single jacket to ensure a silhouette that defies the passage of time.</p>
+                    <h3>A Sustainable Legacy</h3>
+                    <p style="margin-bottom: 1.5rem;">At ROUGGS, we believe true luxury respects its origins. Our atelier is dedicated to sourcing organic, undyed fibers and utilizing botanical dyes that return safely to the earth.</p>
+                    <p>Every piece is crafted slowly, emphasizing human touch over machine speed. From raw linen harvesting to the final hand-stitched hem, our process is a dialogue with nature.</p>
                 </div>
                 <div class="split-img">
-                    <img src="https://images.unsplash.com/photo-1558718919-68875ea21151?q=80&w=1000&auto=format&fit=crop" alt="Tailoring Details">
-                </div>
-            </div>
-            <div class="split-section" style="flex-direction: row-reverse;">
-                <div class="split-text">
-                    <h3>Bespoke Services</h3>
-                    <p>For our most discerning clientele, the ROUGGS Bespoke experience offers unparalleled exclusivity. We invite you into our private fitting rooms where garments are molded perfectly to your unique architecture.</p>
-                    <br>
-                    <button class="btn-gold" style="color: var(--accent-burgundy); border-color: var(--accent-burgundy);" onclick="alert('Booking portal opened.')">Request an Appointment</button>
-                </div>
-                <div class="split-img">
-                    <img src="https://images.unsplash.com/photo-1520975954732-57dd22299614?q=80&w=1000&auto=format&fit=crop" alt="Bespoke Coat">
+                    <img src="https://images.unsplash.com/photo-1605763240000-7e93b172d754?q=80&w=1000&auto=format&fit=crop" alt="Natural Textures">
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="view-collections" class="view-section" style="padding-top: 150px;">
-        <div class="container" style="padding-top: 0;">
+    <div id="view-collections" class="view-section">
+        <div class="container">
             <div class="section-header">
                 <h2>The Collections</h2>
             </div>
             
             <div class="collection-tabs">
-                <button class="tab-btn active" onclick="switchCollection('ss26', this)">Spring / Summer 2026</button>
-                <button class="tab-btn" onclick="switchCollection('aw26', this)">Autumn / Winter 2026</button>
-                <button class="tab-btn" onclick="switchCollection('core', this)">Core Classics</button>
+                <button class="tab-btn active" onclick="switchCollection('ss26', this)">Spring / Summer 26</button>
+                <button class="tab-btn" onclick="switchCollection('aw26', this)">Autumn / Winter 26</button>
+                <button class="tab-btn" onclick="switchCollection('core', this)">Core Organic</button>
             </div>
 
             <div id="col-ss26" class="grid-3 collection-grid active">
-                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1566160980482-fa8430b2012a?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Silk Chiffon Gown</div><div class="p-price">$4,500</div></div></div>
-                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1534126615549-5d4a08f515e3?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Linen Summer Blazer</div><div class="p-price">$2,200</div></div></div>
-                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Pleated Day Dress</div><div class="p-price">$1,850</div></div></div>
+                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1515347619252-60a6bf4fffce?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Fluid Silk Dress</div><div class="p-price">$1,500</div></div></div>
+                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Sandstone Linen Suit</div><div class="p-price">$2,200</div></div></div>
+                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Pleated Cotton Skirt</div><div class="p-price">$950</div></div></div>
             </div>
 
             <div id="col-aw26" class="grid-3 collection-grid">
-                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Heavy Cashmere Coat</div><div class="p-price">$5,200</div></div></div>
-                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Alpaca Roll-Neck</div><div class="p-price">$1,400</div></div></div>
-                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Double-Faced Trench</div><div class="p-price">$3,900</div></div></div>
+                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Heavy Wool Overcoat</div><div class="p-price">$3,200</div></div></div>
+                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Chunky Alpaca Knit</div><div class="p-price">$1,100</div></div></div>
+                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Felted Wool Blazer</div><div class="p-price">$1,900</div></div></div>
             </div>
 
             <div id="col-core" class="grid-3 collection-grid">
-                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">The Foundation Suit</div><div class="p-price">$4,000</div></div></div>
-                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1584916201218-f4242ceb4809?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Signature Weekender</div><div class="p-price">$3,500</div></div></div>
-                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Wool Crepe Trouser</div><div class="p-price">$1,100</div></div></div>
+                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">The Foundation Trench</div><div class="p-price">$3,850</div></div></div>
+                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1584916201218-f4242ceb4809?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Classic Leather Tote</div><div class="p-price">$2,500</div></div></div>
+                <div class="product-card"><div class="p-img-wrapper"><img src="https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?q=80&w=800&auto=format&fit=crop"></div><div class="p-details"><div class="p-title">Relaxed Cotton Trouser</div><div class="p-price">$750</div></div></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-styleguides" class="view-section">
+        <div class="container">
+            <div class="section-header">
+                <p>Curated Uniforms</p>
+                <h2>Shoppable Looks</h2>
+            </div>
+
+            <div class="look-block">
+                <div class="look-image">
+                    <img src="https://images.unsplash.com/photo-1588117305388-c2631a279f82?q=80&w=1000&auto=format&fit=crop" alt="Natural Linen Look">
+                </div>
+                <div class="look-details">
+                    <div class="look-meta">
+                        <h3 class="look-title">Look 01:<br>The Coastal Retreat</h3>
+                        <p class="look-desc">Breathable, undyed linen and soft cotton tailored for fluid movement and quiet moments.</p>
+                    </div>
+
+                    <div class="look-products">
+                        <div class="product-list-item">
+                            <div class="pi-thumb"><img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80"></div>
+                            <div class="pi-text"><h4>Organic Cotton Poplin Shirt</h4><p>$350</p></div>
+                        </div>
+                        <div class="product-list-item">
+                            <div class="pi-thumb"><img src="https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?q=80"></div>
+                            <div class="pi-text"><h4>Raw Linen Trouser</h4><p>$650</p></div>
+                        </div>
+                        <div class="product-list-item">
+                            <div class="pi-thumb"><img src="https://images.unsplash.com/photo-1550614000-4b9519e02a29?q=80"></div>
+                            <div class="pi-text"><h4>Vegetable Tanned Sandal</h4><p>$480</p></div>
+                        </div>
+                    </div>
+
+                    <div class="shop-look-cta">
+                        <div class="total-price">$1,480</div>
+                        <button class="btn-solid" onclick="addFullLookToBag('Coastal Retreat', 1480)">Shop Entire Look</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="look-block" style="direction: rtl;">
+                <div class="look-image" style="direction: ltr;">
+                    <img src="https://images.unsplash.com/photo-1605763240000-7e93b172d754?q=80&w=1000&auto=format&fit=crop" alt="Earthy Winter Look">
+                </div>
+                <div class="look-details" style="direction: ltr;">
+                    <div class="look-meta">
+                        <h3 class="look-title">Look 02:<br>Earthy Warmth</h3>
+                        <p class="look-desc">Heavyweight textures dyed with natural botanicals. Designed to shield and comfort.</p>
+                    </div>
+
+                    <div class="look-products">
+                        <div class="product-list-item">
+                            <div class="pi-thumb"><img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80"></div>
+                            <div class="pi-text"><h4>Felted Wool Wrap Coat</h4><p>$2,800</p></div>
+                        </div>
+                        <div class="product-list-item">
+                            <div class="pi-thumb"><img src="https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?q=80"></div>
+                            <div class="pi-text"><h4>Alpaca Blend Turtleneck</h4><p>$950</p></div>
+                        </div>
+                    </div>
+
+                    <div class="shop-look-cta">
+                        <div class="total-price">$3,750</div>
+                        <button class="btn-solid" onclick="addFullLookToBag('Earthy Warmth', 3750)">Shop Entire Look</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <footer>
-        <div class="footer-grid">
-            <div class="f-col">
-                <div class="footer-logo">ROUGGS</div>
-                <p style="color: #aaa; font-size: 0.85rem;">Defining modern luxury through the lens of uncompromising heritage.</p>
+        <div class="container" style="padding:0;">
+            <div class="footer-grid">
+                <div class="f-col">
+                    <div class="footer-logo">ROUGGS</div>
+                    <p style="font-size: 0.9rem; max-width: 300px;">Crafting sustainable, timeless silhouettes from the earth, for the earth.</p>
+                </div>
+                <div class="f-col">
+                    <h4>Discover</h4>
+                    <ul>
+                        <li onclick="switchView('collections')">Latest Collection</li>
+                        <li onclick="switchView('atelier')">Our Materials</li>
+                        <li onclick="switchView('styleguides')">Curated Looks</li>
+                    </ul>
+                </div>
+                <div class="f-col">
+                    <h4>Assistance</h4>
+                    <ul>
+                        <li>Shipping & Returns</li>
+                        <li>Care Guide</li>
+                        <li>Contact Us</li>
+                    </ul>
+                </div>
             </div>
-            <div class="f-col">
-                <h4>Client Services</h4>
-                <ul>
-                    <li><a href="#">Private Appointments</a></li>
-                    <li><a href="#">Bespoke Tailoring</a></li>
-                    <li><a href="#">Shipping & Returns</a></li>
-                    <li><a href="#">Contact Concierge</a></li>
-                </ul>
+            <div style="text-align: center; font-size: 0.8rem; border-top: 1px solid rgba(107, 99, 88, 0.2); padding-top: 2rem;">
+                &copy; 2026 ROUGGS. Sustainable Luxury.
             </div>
-            <div class="f-col">
-                <h4>The House</h4>
-                <ul>
-                    <li><a href="#" onclick="switchView('atelier')">Our Heritage</a></li>
-                    <li><a href="#">Sustainability</a></li>
-                    <li><a href="#">Careers</a></li>
-                </ul>
-            </div>
-            <div class="f-col">
-                <h4>Newsletter</h4>
-                <p style="color: #aaa; font-size: 0.85rem; margin-bottom: 1rem;">Receive invitations to exclusive presentations.</p>
-                <input type="email" placeholder="Email Address" style="width: 100%; padding: 0.8rem; background: transparent; border: 1px solid #444; color: #fff; margin-bottom: 1rem;">
-                <button class="btn-gold" style="width: 100%; padding: 0.8rem;">Subscribe</button>
-            </div>
-        </div>
-        <div style="border-top: 1px solid #333; padding-top: 2rem; text-align: center; color: #666; font-size: 0.8rem;">
-            &copy; 2026 ROUGGS. WORLDWIDE.
         </div>
     </footer>
 
     <script>
-        // 1. Navbar Scroll Effect
+        // Navbar Scroll
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
         });
 
-        // 2. Page Navigation
+        // View Switcher
         function switchView(viewId) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-            document.getElementById('view-' + viewId).classList.add('active');
-            
-            // Handle nav links highlight
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            event.currentTarget.classList.add('active');
             
+            document.getElementById('view-' + viewId).classList.add('active');
+            event.currentTarget.classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 3. Collection Tabs
+        // Collection Tabs
         function switchCollection(colId, btnElement) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             btnElement.classList.add('active');
@@ -356,20 +425,25 @@
             document.getElementById('col-' + colId).classList.add('active');
         }
 
-        // 4. Hero Slideshow Logic
+        // Hero Slideshow
         let slideIndex = 0;
         const slides = document.querySelectorAll('.slide');
-        
         function showSlides() {
             slides.forEach(slide => slide.classList.remove('active'));
             slideIndex++;
             if (slideIndex > slides.length) { slideIndex = 1 }
             slides[slideIndex - 1].classList.add('active');
-            setTimeout(showSlides, 5000); // Change image every 5 seconds
+            setTimeout(showSlides, 6000); // 6 seconds per slide
         }
-        
-        // Start slideshow
         showSlides();
+
+        // Cart Logic
+        let itemsInBag = 0;
+        function addFullLookToBag(lookName, price) {
+            itemsInBag += 1; 
+            document.getElementById('cartCount').innerText = itemsInBag;
+            alert(`Added the "${lookName}" look ($${price.toLocaleString()}) to your bag.`);
+        }
     </script>
 </body>
 </html>
